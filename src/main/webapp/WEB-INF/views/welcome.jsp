@@ -12,11 +12,11 @@
 
 <div>
 <h3>Triple P Members:</h3>
-<h4>Pandey</h4>
-<h4>Pandeya</h4>
-<h4>Pramita</h4><br><br>
+<h4>Pandey Bharat</h4>
+<h4>Pandeya Govinda</h4>
+<h4>Pramita Dhakal</h4><br><br>
 </div>
 
-<P>  Current Time: ${serverTime}. </P>
+<P>Time Check: ${serverTime}</P>
 </body>
 </html>
