@@ -8,13 +8,13 @@
 <h1>
 	e-Bazaar
 </h1>
-<h3>into the @CodeWorld ;</h3>
+<h4>into the @CodeWorld ;</h4><br><br>
 
 <div>
-<h2>Members:</h2>
+<h3>Triple P Members:</h3>
 <h4>Pandey</h4>
 <h4>Pandeya</h4>
-<h4>Pramita</h4>
+<h4>Pramita</h4><br><br>
 </div>
 
 <P>  Current Time: ${serverTime}. </P>
