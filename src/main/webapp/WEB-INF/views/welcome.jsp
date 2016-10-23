@@ -6,9 +6,17 @@
 </head>
 <body>
 <h1>
-	Hello world!  
+	e-Bazaar
 </h1>
+<h3>into the @CodeWorld ;</h3>
 
-<P>  The time on the server is ${serverTime}. </P>
+<div>
+<h2>Members:</h2>
+<h4>Pandey</h4>
+<h4>Pandeya</h4>
+<h4>Pramita</h4>
+</div>
+
+<P>  Current Time: ${serverTime}. </P>
 </body>
 </html>
