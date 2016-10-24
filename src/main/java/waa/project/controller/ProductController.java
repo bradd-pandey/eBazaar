@@ -11,6 +11,12 @@ import waa.project.domain.Product;
 
 public class ProductController {
 	
+	@RequestMapping(value="/showProduct", method = RequestMethod.GET)
+	public String showWelcomeProduct(){
+		System.out.println("Hello");
+		return null;
+	}
+			
 	@RequestMapping(value = "/addProduct", method = RequestMethod.GET)
 	public String getAddNewProductForm(@ModelAttribute("newProduct") Product newProduct) {
 		System.out.println("Come here");

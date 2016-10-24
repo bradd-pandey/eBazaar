@@ -26,12 +26,12 @@ public class Product {
 	private String description;
 	private String manufacturer;
 	
-	@OneToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-	@JoinTable
-	private String category;
+	@OneToOne(cascade=CascadeType.ALL)
+	private Category category;
+	
 	private long unitsInStock;
 	private long unitsInOrder;
-	private MultipartFile  productImage;
+	//private MultipartFile  productImage;
 	
 	
 	public String getProductId() {
@@ -64,10 +64,10 @@ public class Product {
 	public void setManufacturer(String manufacturer) {
 		this.manufacturer = manufacturer;
 	}
-	public String getCategory() {
+	public Category getCategory() {
 		return category;
 	}
-	public void setCategory(String category) {
+	public void setCategory(Category category) {
 		this.category = category;
 	}
 	public long getUnitsInStock() {
@@ -82,11 +82,11 @@ public class Product {
 	public void setUnitsInOrder(long unitsInOrder) {
 		this.unitsInOrder = unitsInOrder;
 	}
-	public MultipartFile getProductImage() {
+	/*public MultipartFile getProductImage() {
 		return productImage;
 	}
 	public void setProductImage(MultipartFile productImage) {
 		this.productImage = productImage;
-	}
+	}*/
 
 }

@@ -21,7 +21,7 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="waa.project.controller" />
+	<context:component-scan base-package="waa.project" />
 	
 	
 	
