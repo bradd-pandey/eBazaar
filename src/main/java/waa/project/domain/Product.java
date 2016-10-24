@@ -2,22 +2,38 @@ package waa.project.domain;
 
 import java.math.BigDecimal;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToOne;
 
 import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 public class Product {
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Long id;
+	
 	private String productId;
 	private String name;
 	private BigDecimal unitPrice;
 	private String description;
 	private String manufacturer;
-	private String category;
+	
+	@OneToOne(cascade=CascadeType.ALL)
+	private Category category;
+	
 	private long unitsInStock;
 	private long unitsInOrder;
-	private MultipartFile  productImage;
+	//private MultipartFile  productImage;
+	
+	
 	public String getProductId() {
 		return productId;
 	}
@@ -48,10 +64,10 @@ public class Product {
 	public void setManufacturer(String manufacturer) {
 		this.manufacturer = manufacturer;
 	}
-	public String getCategory() {
+	public Category getCategory() {
 		return category;
 	}
-	public void setCategory(String category) {
+	public void setCategory(Category category) {
 		this.category = category;
 	}
 	public long getUnitsInStock() {
@@ -66,13 +82,11 @@ public class Product {
 	public void setUnitsInOrder(long unitsInOrder) {
 		this.unitsInOrder = unitsInOrder;
 	}
-	public MultipartFile getProductImage() {
+	/*public MultipartFile getProductImage() {
 		return productImage;
 	}
 	public void setProductImage(MultipartFile productImage) {
 		this.productImage = productImage;
-	}
-	
-	
+	}*/
 
 }
