@@ -1,5 +1,5 @@
 package waa.project.serviceImpl;
 
-public class ProductRepositoryImpl {
+public class ProductServiceImpl {
 
 }
