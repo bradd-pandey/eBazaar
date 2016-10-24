@@ -1,6 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <html>
 <head>
 	<title>Home</title>
@@ -17,9 +16,6 @@
 <h4>Pandeya Govinda</h4>
 <h4>Pramita Dhakal</h4><br><br>
 </div>
-
- <spring:url value="/orderFlow" var="url" />
- <a href="${url}">Login</a>
 
 <P>Time Check: ${serverTime}</P>
 </body>
