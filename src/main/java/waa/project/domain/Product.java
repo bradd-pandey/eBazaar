@@ -2,8 +2,11 @@ package waa.project.domain;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Entity;
+
 import org.springframework.web.multipart.MultipartFile;
 
+@Entity
 public class Product {
 	
 	private String productId;
