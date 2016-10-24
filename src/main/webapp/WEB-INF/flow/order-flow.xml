@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+http://www.springframework.org/schema/webflow/spring-webflow-2.4.xsd"
+	start-state="displayLoginView">
+
+	<var name="user" class="mum.edu.domain.User" />
+
+	<view-state id="displayLoginView" view="jsp/login.jsp"
+		model="user">
+		<transition on="performLogin" to="performLoginAction" />
+	</view-state>
+
+	<action-state id="performLoginAction">
+		<evaluate expression="loginControllerHelper.validateUser(user)" />
+		<transition on="true" to="displayAdvice">
+			<evaluate expression="adviceServiceImpl.getAllRoasts()"
+				result="flowScope.roasts"></evaluate>
+		</transition>
+		<transition on="false" to="displayLoginView" />
+
+	</action-state>
+
+	<view-state id="displayAdvice" view="jsp/advice.jsp" model="user">
+		<transition on="performAdviceList" to="performAdviceListAction">
+		</transition>
+		<transition on="logout" to="logout">
+		</transition>
+	</view-state>
+
+	<action-state id="performAdviceListAction">
+			<evaluate expression="adviceControllerHelper.getAdviceList(requestParameters.roastKey)"
+			result="flashScope.roastList" />
+	     <evaluate expression="adviceControllerHelper.getRoastByKey(requestParameters.roastKey)"
+			result="flashScope.roast" result-type="string"/> 
+		
+		<transition to="displayDisplay" />
+	</action-state>
+
+	<view-state id="displayDisplay" view="jsp/display.jsp"
+		model="user">
+		
+		<transition on="back" to="displayAdvice" />
+	</view-state>
+	
+	<end-state id="logout"></end-state>
+</flow>
