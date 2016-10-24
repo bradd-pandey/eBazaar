@@ -1,5 +1,5 @@
 package waa.project.repository;
 
-public class OrderRepository {
+public interface OrderRepository {
 
 }
