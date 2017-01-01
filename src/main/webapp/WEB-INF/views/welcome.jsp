@@ -1,22 +1,41 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
+<%@ page session="false"%>
 <html>
 <head>
-	<title>Home</title>
+<title>Home</title>
 </head>
 <body>
-<h1>
-	e-Bazaar
-</h1>
-<h4>into the @CodeWorld ;</h4><br><br>
+	<spring:url value="/product" var="show" />
+	<a href="${show}"><button>Go to Products</button></a>
 
-<div>
-<h3>Triple P Members:</h3>
-<h4>Pandey Bharat</h4>
-<h4>Pandeya Govinda</h4>
-<h4>Pramita Dhakal</h4><br><br>
-</div>
+	<spring:url value="/userinput" var="user" />
+	<a href="${user}"><button>Register User</button></a>
 
-<P>Time Check: ${serverTime}</P>
+	<security:authorize access="isAnonymous()">
+		<spring:url value="/login" var="ur" />
+		<a href="${ur}"><button>Login</button></a>
+	</security:authorize>
+
+	<h1>e-Bazaar</h1>
+	<p>The evolution continues ..</p>
+	<br>
+	<div>
+		<h5>Triple P Members:</h5>
+		<p>Pandey Bharat</p>
+		<p>Pandeya Govinda</p>
+		<p>Pramita Dhakal</p>
+		<br> <br>
+	</div>
+	
+	<div>
+	<p><strong>
+	© Triple P </strong><br>
+	into the @CodeWorld ;
+	</p>
+	</div>
+
 </body>
 </html>

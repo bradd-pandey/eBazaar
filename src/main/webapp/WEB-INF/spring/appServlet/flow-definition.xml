@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:flow="http://www.springframework.org/schema/webflow-config"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow-config
+http://www.springframework.org/schema/webflow-config/spring-webflow-config.xsd
+http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean class="org.springframework.webflow.mvc.servlet.FlowHandlerMapping">
+		<property name="flowRegistry" ref="orderFlowRegistry" />
+	</bean>
+
+	<bean class="org.springframework.webflow.mvc.servlet.FlowHandlerAdapter">
+		<property name="flowExecutor" ref="orderFlowExecutor" />
+	</bean>
+
+	<flow:flow-executor id="orderFlowExecutor"
+		flow-registry="orderFlowRegistry" />
+
+	<flow:flow-registry id="orderFlowRegistry"
+		flow-builder-services="flowBuilderServices">
+		<flow:flow-location id="orderFlow"
+			path="/WEB-INF/flow/order-flow.xml" />
+	</flow:flow-registry>
+
+	<flow:flow-builder-services id="flowBuilderServices"
+		validator="validator" />
+
+	<bean id="validator"
+		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+
+</beans>
+		

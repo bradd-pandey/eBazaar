@@ -1,29 +1,46 @@
 package waa.project.domain;
 
-import java.math.BigDecimal;
+import java.io.Serializable;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
+import javax.validation.constraints.Size;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import waa.project.validator.ProductId;
+
+
+
 @Entity
-public class Product {
+public class Product implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long id;
+	private int id;
 	
-	private String productId;
+	@ProductId
+	private Integer productId;
+	
+	@Size(min=4, max=50, message="{Product.name.validation}")
 	private String name;
-	private BigDecimal unitPrice;
+	
+	
+	private double price;
+	
 	private String description;
+	
+	@Size(min=4, max=50, message="{Product.manufacturer.validation}")
 	private String manufacturer;
 	
 	@OneToOne(cascade=CascadeType.ALL)
@@ -31,13 +48,15 @@ public class Product {
 	
 	private long unitsInStock;
 	private long unitsInOrder;
-	//private MultipartFile  productImage;
+	
+	@Transient
+	private MultipartFile  productImage;
 	
 	
-	public String getProductId() {
+	public Integer getProductId() {
 		return productId;
 	}
-	public void setProductId(String productId) {
+	public void setProductId(Integer productId) {
 		this.productId = productId;
 	}
 	public String getName() {
@@ -46,11 +65,11 @@ public class Product {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public BigDecimal getUnitPrice() {
-		return unitPrice;
+	public double getPrice() {
+		return price;
 	}
-	public void setUnitPrice(BigDecimal unitPrice) {
-		this.unitPrice = unitPrice;
+	public void setPrice(double unitPrice) {
+		this.price = unitPrice;
 	}
 	public String getDescription() {
 		return description;
@@ -82,11 +101,11 @@ public class Product {
 	public void setUnitsInOrder(long unitsInOrder) {
 		this.unitsInOrder = unitsInOrder;
 	}
-	/*public MultipartFile getProductImage() {
+	public MultipartFile getProductImage() {
 		return productImage;
 	}
 	public void setProductImage(MultipartFile productImage) {
 		this.productImage = productImage;
-	}*/
+	}
 
 }

@@ -4,30 +4,43 @@ function askQuantity(productId){
 	$("#pQuantity").show();	
 }
 
+var contextRoot = "/" + window.location.pathname.split( '/' )[1];
+
 function ajaxCall(){
 	var dataToSend = JSON.stringify(serializeObject($('#quantityForm')));
-	/*var quantity = $("#quantity").val();
-	var productId = $("#productId").val();*/
-	
+		
 	$.ajax({
 		type: 'POST',
-		url: 'order/addToCart',
+		url: contextRoot + '/order/addToCart',
 		dataType: 'json',
-		/*data: {"productId": productId,
-				"quantity" : quantity},*/	
 		data:dataToSend,
 		contentType: 'application/json', 
 		success: function(successDataObject) {			
-//			alert("Product successfully added to the cart!")		
+			alert("Product successfully added to the cart!")		
 		},
 		error: function(errorDataObject) {
-//			alert("Error!")			
+			alert("Error!")			
 		}
 	});
 }
 
-function removeProduct(){
-	
+function removeProduct(productId){
+//	alert(productId);
+	$.ajax({
+		type: 'GET',
+		url: contextRoot + '/order/removeFromCart',
+		dataType: '',
+		data: {'productId':productId},
+		contentType: '', 
+		success: function(successDataObject) {			
+			alert("Product successfully removed from the cart!");
+			location.reload();
+		},
+		error: function(errorDataObject) {
+			alert("Remove operation is failed!")			
+		}
+		
+	});
 }
 
 function serializeObject (form){

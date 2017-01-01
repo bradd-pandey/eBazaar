@@ -1,78 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xmlns:context="http://www.springframework.org/schema/context"
-   xmlns:tx="http://www.springframework.org/schema/tx"
-   xmlns:jpa="http://www.springframework.org/schema/data/jpa"
-    xsi:schemaLocation="
-      http://www.springframework.org/schema/beans 
-      http://www.springframework.org/schema/beans/spring-beans.xsd
- 	  http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
-      http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
- 
- <!-- The jpa:repositories scans for all interfaces that extend  Repository and 
-      creates implementations for use at runtime.  -->
- <jpa:repositories base-package="waa.project.repository" />
- 
- 
- <!-- Creates a JPA EntityManagerFactory according to JPA's standard container bootstrap contract.
-      This is the most powerful way to set up a shared JPA EntityManagerFactory in a Spring application context;
-  -->
-   <bean id="entityManager" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-      <property name="dataSource" ref="dataSource" />
-      <property name="packagesToScan" value="waa.project.domain" />
-     
-     <!--  provider-specific initialization,etc. -->
-      <property name="jpaVendorAdapter">
-         <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
-      </property>
-      <property name="jpaProperties">
-         <props>
- <!-- 
-    validate: validate the schema, makes no changes to the database.
-    update: update the schema.
-    create: creates the schema, destroying previous data.
-    create-drop: drop the schema at the end of the session.
-   These options intended to be developers tools and not to facilitate any production level databases 
-            <prop key="hibernate.hbm2ddl.auto">create-drop</prop>
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context 
+ 	  http://www.springframework.org/schema/context/spring-context.xsd
+      http://www.springframework.org/schema/tx 
+      http://www.springframework.org/schema/tx/spring-tx.xsd
+      http://www.springframework.org/schema/data/jpa 
+      http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
- -->
-             <prop key="hibernate.hbm2ddl.auto">create-drop</prop>
-            <!-- hibernate.dialect. This property makes Hibernate 
-                 generate the appropriate SQL for the chosen database. -->
-            <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
-            <prop key="show_sql">true</prop>
-         </props>
-      </property>
-   </bean>
- 
- 	<bean id="dataSource"
+	<!-- Root Context: defines shared resources visible to all other web components -->
+
+	<jpa:repositories base-package="waa.project.repository" />
+
+	<bean id="entityManager"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan" value="waa.project.domain" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+		</property>
+		<!-- validate: validate the schema, makes no changes to the database. update: 
+			update the schema. create: creates the schema, destroying previous data. 
+			create-drop: drop the schema at the end of the session. These options intended 
+			to be developers tools and not to facilitate any production level databases 
+			<prop key="hibernate.hbm2ddl.auto">create-drop</prop> -->
+
+		<property name="jpaProperties">
+			<props>
+				<!-- <prop key="hibernate.hbm2ddl.auto">create-drop</prop> --> <!-- mine original -->
+				<prop key="hibernate.hbm2ddl.auto">create</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+				<prop key="hibernate.hbm2ddl.import_files">populateMySQL.sql</prop> 
+				<prop key="show_sql">true</prop> 
+			</props>
+		</property>
+	</bean>
+
+	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/waa" />
+		<property name="url" value="jdbc:mysql://localhost:3306/ebazaar?createDatabaseIfNotExist=true" />
 		<property name="username" value="root" />
-		<property name="password" value="root" />
+		<property name="password" value="MySQL" />
 	</bean>
 
 
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManager" />
+	</bean>
 
-    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-      <property name="entityManagerFactory" ref="entityManager" />
-   </bean>
-   
-   <!-- Scan for  transaction-based resources -->
-   	<context:component-scan base-package="waa.project.serviceImpl" />
-  	<context:component-scan base-package="waa.project.repository" />
-    
-   <tx:annotation-driven transaction-manager="transactionManager"/>
- 
- <!--
-        Post-processor to perform exception translation on @Repository classes
-        (from native exceptions such as JPA PersistenceExceptions to
-        Spring&rsquo;s DataAccessException hierarchy).
-    -->
-   <bean id="persistenceExceptionTranslationPostProcessor"
-      class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
- 
+	<!-- Scan for transaction-based resources -->
+	<context:component-scan base-package="waa.project.service" /> 
+	<context:component-scan base-package="waa.project.domain" />
+	<context:component-scan base-package="waa.project.repository" />
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<bean id="persistenceExceptionTranslationPostProcessor"
+		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
 </beans>

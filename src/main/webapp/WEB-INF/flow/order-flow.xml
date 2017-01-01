@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+						http://www.springframework.org/schema/webflow/spring-webflow.xsd">
+
+	<!-- start-state="shippingDetailsView"> -->
+	<var name="order" class="waa.project.domain.Order" />
+
+	<!-- First "state" listed is first executed - unless <on-start> -->
+	<action-state id="addCartToOrder">
+		<evaluate
+			expression="orderControllerHelper.addItemsToOrder(order,externalContext.nativeRequest.session)"
+			result="order" />
+		<transition to="shippingDetailsView" />
+	</action-state>
+
+	<view-state id="shippingDetailsView" view="jsp/shippingDetails.jsp"
+		model="order">
+		<transition on="shippingDetails" to="paymentDetailsView" />
+		<transition on="cancel" to="cancelOrder" />
+	</view-state>
+
+	<view-state id="paymentDetailsView" view="jsp/paymentDetails.jsp"
+		model="order">
+		<transition on="paymentDetails" to="orderConfirmationView" />
+		<transition on="backToshippingDetails" to="shippingDetailsView" />
+		<transition on="cancel" to="cancelOrder" />
+	</view-state>
+
+	<view-state id="orderConfirmationView" view="jsp/orderConfirmation.jsp"
+		model="order">
+		<transition on="cancel" to="cancelOrder" />
+		<transition on="orderConfirmation" to="processOrder" />
+		<transition on="backToPaymentDetails" to="paymentDetailsView" />
+	</view-state>
+
+	<action-state id="processOrder">
+		<evaluate expression="orderControllerHelper.saveOrder(order)"
+			result="order" />
+		<transition to="thankCustomer" />
+	</action-state>
+
+	<view-state id="InvalidCartWarning">
+		<transition to="endState" />
+	</view-state>
+
+	<view-state id="thankCustomer" view="jsp/thanks.jsp">
+		<transition to="endState" />
+	</view-state>
+
+	<end-state id="endState" />
+
+	<end-state id="logout"></end-state>
+	<end-state id="cancelOrder" view="jsp/cancelOrder.jsp" />
+
+	<global-transitions>
+		<transition on="cancel" to="endState" />
+	</global-transitions>
+	
+</flow>

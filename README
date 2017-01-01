@@ -1,0 +1,31 @@
+Read Me File
+------------------------------------------------------------
+# e-Bazaar
+
+Instruction to run the project:
+-------------------------------
+Unzip the project and import using maven.
+The home page is loaded by default. 
+Here, anonymous can register and registered user can login.
+Details is saved to the database.
+
+You can login using the given credentials for operation.
+The Admin credential are:
+Username: admin	
+password: admin
+
+The user credentials are :
+username: user
+password: user
+
+You can navigate to the products by clicking the go to products.
+To add product you need Admin credentials.
+After adding product, details is saved to the database.
+Every user can see the details of product, order the product, add to cart and see cart list.
+
+When check out button is clicked anonymous users are navigated to login page and
+redirect to the shipping details page and authenticate users are directly 
+redirect to the shipping details . 
+Web Flow starts with shipping details page and exists up to thank customer.
+When confirm button is pressed in the confirmation page, the order is saved to the database.
+

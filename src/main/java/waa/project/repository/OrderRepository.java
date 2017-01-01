@@ -1,5 +1,9 @@
 package waa.project.repository;
 
-public interface OrderRepository {
+import org.springframework.data.repository.CrudRepository;
+
+import waa.project.domain.Order;
+
+public interface OrderRepository extends CrudRepository<Order, Integer>{
 
 }
